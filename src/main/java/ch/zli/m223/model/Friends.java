@@ -22,4 +22,20 @@ public class Friends {
         this.id = id;
     }
 
+    public AppUser getUser() {
+        return user;
+    }
+
+    public void setUser(AppUser user) {
+        this.user = user;
+    }
+
+    public AppUser getFriend() {
+        return friend;
+    }
+
+    public void setFriend(AppUser friend) {
+        this.friend = friend;
+    }
+
 }

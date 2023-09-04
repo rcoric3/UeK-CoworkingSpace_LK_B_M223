@@ -1,5 +1,7 @@
 package ch.zli.m223.model;
 
+import java.util.Optional;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -74,6 +76,9 @@ public class AppUser {
 
     public void setIsAdmin(Boolean isAdmin) {
         this.isAdmin = isAdmin;
+    }
+
+    public void setEmail(Optional<AppUser> optional) {
     }
 
 }

@@ -42,4 +42,14 @@ public class BookingService {
         }
         return updatedBooking;
     }
+    @Transactional
+    public Booking changeStatus(Long bookingId, Booking updatedBooking){
+        Booking existingBooking = entityManager.find(Booking.class, bookingId);
+        if (existingBooking != null) {
+            existingBooking.setStatus(updatedBooking.getStatus());
+            return existingBooking;
+        }
+        return updatedBooking;
+    }
+
 }

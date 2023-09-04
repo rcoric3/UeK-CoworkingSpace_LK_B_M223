@@ -1,5 +1,7 @@
 package ch.zli.m223.service;
 
+import java.util.Optional;
+
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
@@ -28,14 +30,33 @@ public class CoworkingSpaceService {
 
     @Transactional
     public CoworkingSpace updateCoworkingSpace(Long coworkingSpaceId, CoworkingSpace updatedCoworkingSpace) {
-        CoworkingSpace existingCoworkingSPace = entityManager.find(CoworkingSpace.class, coworkingSpaceId);
-        if (existingCoworkingSPace != null) {
-            existingCoworkingSPace.setAvailability(updatedCoworkingSpace.getAvailability());
-            existingCoworkingSPace.setFavorite(updatedCoworkingSpace.getFavorite());
-            existingCoworkingSPace.setName(updatedCoworkingSpace.getName());
-            existingCoworkingSPace.setStreet(updatedCoworkingSpace.getStreet());
-            return existingCoworkingSPace;
+        CoworkingSpace existingCoworkingSpace = entityManager.find(CoworkingSpace.class, coworkingSpaceId);
+        if (existingCoworkingSpace != null) {
+            existingCoworkingSpace.setAvailability(updatedCoworkingSpace.getAvailability());
+            existingCoworkingSpace.setFavorite(updatedCoworkingSpace.getFavorite());
+            existingCoworkingSpace.setName(updatedCoworkingSpace.getName());
+            existingCoworkingSpace.setStreet(updatedCoworkingSpace.getStreet());
+            return existingCoworkingSpace;
         }
         return updatedCoworkingSpace;
+    }
+
+    @Transactional
+    public CoworkingSpace addToFavorite(Long coworkingSpaceId, CoworkingSpace updatedCoworkingSpace) {
+        CoworkingSpace existingCoworkingSpace = entityManager.find(CoworkingSpace.class, coworkingSpaceId);
+        if (existingCoworkingSpace != null) {
+            existingCoworkingSpace.setFavorite(updatedCoworkingSpace.getFavorite());
+            return existingCoworkingSpace;
+        }
+        return updatedCoworkingSpace;
+    }
+
+    @Transactional
+    public Optional<CoworkingSpace> findByEmail(String email) {
+        return entityManager
+                .createNamedQuery("CoworkingSpace.findByEmail", CoworkingSpace.class)
+                .setParameter("email", email)
+                .getResultStream()
+                .findFirst();
     }
 }
