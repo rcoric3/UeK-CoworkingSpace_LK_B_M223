@@ -1,7 +1,8 @@
 package ch.zli.m223.model;
 
-import java.time.LocalDateTime;
 import javax.persistence.*;
+
+import org.hibernate.type.DateType;
 
 @Entity
 public class Booking {
@@ -16,7 +17,7 @@ public class Booking {
     private String type;
 
     @Column
-    private LocalDateTime date;
+    private DateType date;
 
     @ManyToOne
     private AppUser AppUser;
@@ -48,11 +49,11 @@ public class Booking {
         this.type = type;
     }
 
-    public LocalDateTime getDate() {
+    public DateType getDate() {
         return date;
     }
 
-    public void setDate(LocalDateTime date) {
+    public void setDate(DateType date) {
         this.date = date;
     }
 
