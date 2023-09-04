@@ -1,8 +1,14 @@
 package ch.zli.m223.model;
 
-import javax.persistence.*;
+import java.util.Date;
 
-import org.hibernate.type.DateType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+
 
 @Entity
 public class Booking {
@@ -17,7 +23,7 @@ public class Booking {
     private String type;
 
     @Column
-    private DateType date;
+    private Date date;
 
     @ManyToOne
     private AppUser AppUser;
@@ -49,11 +55,11 @@ public class Booking {
         this.type = type;
     }
 
-    public DateType getDate() {
+    public Date getDate() {
         return date;
     }
 
-    public void setDate(DateType date) {
+    public void setDate(Date date) {
         this.date = date;
     }
 

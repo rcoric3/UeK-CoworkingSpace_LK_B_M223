@@ -21,6 +21,7 @@ public class CoworkingSpace {
     @Column
     private Boolean favorite;
 
+
     public Long getId() {
         return id;
     }
