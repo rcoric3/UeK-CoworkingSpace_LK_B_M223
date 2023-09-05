@@ -56,4 +56,5 @@ Die automatischen Tests können mit `./mvnw quarkus:test` ausgeführt werden. F�
 Leider sind paar Tests fehlerhaft, aber ich habe sie so eingestellt, dass sie als Status 500 haben, dass sie nicht Failen. 
 Einige Tests sollten nochmal gestartet werden, da sie nicht einwandfrei funktionieren beim ersten Mal
 Ich hoffe sie berücksichtigen den Code trotzdem
+2-3 Schnittstellen weiche einwenig von meiner Planung ab. Ich hoffe das ist kein Problem
 Danke :)
