@@ -21,6 +21,29 @@ Die Daten werden in einer PostgreSQL-Datenbank gespeichert. In der Entwicklungsu
  - Username: `postgres`
  - Password: `postgres`
 
+ ## Test Daten
+
+Die automatisch erstelleten Benutzer sind [
+    {
+        "id": 1,
+        "username": "admin",
+        "lastname": "Gwerder",
+        "email": "admin@gmail.com",
+        "password": "1234",
+        "isAdmin": true,
+        "admin": true
+    },
+    {
+        "id": 2,
+        "username": "user",
+        "lastname": "Schmidt",
+        "email": "user@gamil.com",
+        "password": "4321",
+        "isAdmin": false,
+        "admin": false
+    }
+]
+
 ## Automatische Tests
 
 Die automatischen Tests können mit `./mvnw quarkus:test` ausgeführt werden. Für die automatischen Tests wird nicht die PostgreSQL-Datenbank verwendet, sondern eine H2-Datenbank, welche sich im Arbeitsspeicher während der Ausführung befindet.
