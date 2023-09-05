@@ -2,6 +2,8 @@ package ch.zli.m223.controller;
 
 import java.util.List;
 
+import javax.annotation.security.PermitAll;
+import javax.annotation.security.RolesAllowed;
 import javax.inject.Inject;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -21,6 +23,7 @@ public class AppUserController {
     private AppUserService userService;
 
     @GET
+    @RolesAllowed({ "admin" })
     @Path("/getAll")
     @Produces(MediaType.APPLICATION_JSON)
     public List<AppUser> showUser() {
@@ -30,21 +33,25 @@ public class AppUserController {
     @POST
     @Path("/createUser")
     @Produces(MediaType.APPLICATION_JSON)
+    @PermitAll
     public AppUser createUser(AppUser appUser) {
         userService.createUser(appUser);
         return appUser;
     }
 
     @PUT
+    @RolesAllowed({ "admin" })
     @Path("/manageMembers/{userId}")
     @Produces(MediaType.APPLICATION_JSON)
-    public AppUser manageMembers(@PathParam("id") Long id, AppUser appUser) {
+    public AppUser manageMembers(@PathParam("userId") Long id, AppUser appUser) {
         return userService.updateUser(id, appUser);
     }
+
     @DELETE
+    @RolesAllowed({ "admin" })
     @Path("/deleteUser/{userId}")
     @Produces(MediaType.APPLICATION_JSON)
-    public void deleteBooking(@PathParam("id") Long id){
+    public void deleteBooking(@PathParam("userId") Long id) {
         userService.deleteUser(id);
     }
 

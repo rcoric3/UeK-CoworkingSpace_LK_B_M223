@@ -2,6 +2,7 @@ package ch.zli.m223.controller;
 
 import java.util.Optional;
 
+import javax.annotation.security.RolesAllowed;
 import javax.inject.Inject;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -23,6 +24,7 @@ public class BookingController {
     BookingService bookingService;
 
     @POST
+    @RolesAllowed({"admin", "user"})
     @Path("/createBooking")
     @Produces(MediaType.APPLICATION_JSON)
     public Booking createNewBooking(Booking booking) {
@@ -31,6 +33,7 @@ public class BookingController {
     }
 
     @GET
+    @RolesAllowed({"admin", "user"})
     @Path("/checkBookingStatus/{id}")
     @Produces(MediaType.APPLICATION_JSON)
     public Optional<Booking> checkBooking(@PathParam("id") Long id) {
@@ -43,13 +46,15 @@ public class BookingController {
     }
 
     @DELETE
+    @RolesAllowed({"admin", "user"})
     @Path("/cancelBooking/{bookingId}")
     @Produces(MediaType.APPLICATION_JSON)
-    public void deleteBooking(@PathParam("id") Long id) {
+    public void deleteBooking(@PathParam("bookingId") Long id) {
         bookingService.deleteBooking(id);
     }
 
     @PUT
+    @RolesAllowed({"admin"})
     @Path("/manageBookingRequests/{bookingId}")
     @Produces(MediaType.APPLICATION_JSON)
     public Booking manageBookingRequest(@PathParam("bookingId") Long id, Booking booking) {
@@ -57,6 +62,7 @@ public class BookingController {
     }
 
     @PUT
+    @RolesAllowed({"admin", "user"})
     @Path("/changeStatus/{bookingId}")
     @Produces(MediaType.APPLICATION_JSON)
     public Booking changeStatus(@PathParam("bookingId") Long id, Booking booking) {

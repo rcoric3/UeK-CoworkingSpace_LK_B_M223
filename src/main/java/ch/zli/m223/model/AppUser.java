@@ -15,16 +15,16 @@ public class AppUser {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column
+    @Column(unique = true)
     private String username;
 
     @Column
     private String lastname;
 
-    @Column
+    @Column(unique = true)
     private String email;
 
-    @Column
+    @Column(unique = true)
     private String password;
 
     @Column
@@ -73,6 +73,10 @@ public class AppUser {
     public Boolean getIsAdmin() {
         return isAdmin;
     }
+
+    public boolean isAdmin() {
+		return isAdmin;
+	}
 
     public void setIsAdmin(Boolean isAdmin) {
         this.isAdmin = isAdmin;

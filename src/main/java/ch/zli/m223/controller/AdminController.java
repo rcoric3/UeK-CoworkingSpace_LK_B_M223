@@ -6,8 +6,9 @@ import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
+import javax.annotation.security.PermitAll;
 
+import ch.zli.m223.model.AppUser;
 import ch.zli.m223.service.AppUserService;
 @Path("/admin")
 @Produces(MediaType.APPLICATION_JSON)
@@ -19,7 +20,8 @@ public class AdminController {
 
     @POST
     @Path("/login")
-    public String login() {
-        return "Logged in";
+    @PermitAll
+    public String login(AppUser user) {
+        return userService.login(user.getEmail(), user.getPassword());
     }
 }

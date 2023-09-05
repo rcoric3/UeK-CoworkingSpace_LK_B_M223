@@ -1,6 +1,7 @@
 package ch.zli.m223.controller;
 
 
+import javax.annotation.security.RolesAllowed;
 import javax.inject.Inject;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -18,6 +19,7 @@ public class FriendsController {
     private FriendsService friendsService;
 
     @POST
+    @RolesAllowed({"admin", "user"})
     @Path("/addFriend/userId/{userId}/friendId/{friendId}")
     @Produces(MediaType.APPLICATION_JSON)
     public Friends addFriend(

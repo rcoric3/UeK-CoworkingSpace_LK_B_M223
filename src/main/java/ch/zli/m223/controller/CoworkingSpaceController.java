@@ -1,5 +1,6 @@
 package ch.zli.m223.controller;
 
+import javax.annotation.security.RolesAllowed;
 import javax.inject.Inject;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
@@ -17,6 +18,7 @@ public class CoworkingSpaceController {
     private CoworkingSpaceService coworkingSpaceService;
 
     @POST
+    @RolesAllowed({"admin"})
     @Path("/createCoworkingSpace")
     @Produces(MediaType.APPLICATION_JSON)
     public CoworkingSpace createNewBooking(CoworkingSpace coworkingSpace) {
@@ -25,6 +27,7 @@ public class CoworkingSpaceController {
     }
 
     @PUT
+    @RolesAllowed({"admin"})
     @Path("/addCoworkingSpaceToFavorite")
     @Produces(MediaType.APPLICATION_JSON)
     public CoworkingSpace coworkingSpace(@PathParam("id") Long id, CoworkingSpace coworkingSpace) {
