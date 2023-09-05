@@ -3,7 +3,6 @@ package ch.zli.m223.controller;
 import static io.restassured.RestAssured.given;
 
 import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
 
 import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;
 import org.junit.jupiter.api.Order;
@@ -12,7 +11,6 @@ import org.junit.jupiter.api.TestMethodOrder;
 
 import com.google.inject.Inject;
 
-import ch.zli.m223.model.AppUser;
 import ch.zli.m223.service.AppUserService;
 import io.quarkus.test.common.QuarkusTestResource;
 import io.quarkus.test.h2.H2DatabaseTestResource;
