@@ -1,5 +1,9 @@
 package ch.zli.m223.service;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.event.Observes;
 import javax.inject.Inject;
@@ -43,13 +47,24 @@ public class TestDataService {
 
         // Booking
         var bookingA = new Booking();
+        var bookingB = new Booking();
+        String dateString = "2023-09-10";
+        String dataString2 = "2024-09-10";
+
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        try {
+            Date date = dateFormat.parse(dateString);
+            Date date2 = dateFormat.parse(dataString2);
+            bookingA.setDate(date);
+            bookingB.setDate(date2);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
         bookingA.setStatus("Verfügbar");
         bookingA.setType("HalbTag");
-        bookingA.setDate(null);
 
         entityManager.persist(bookingA);
 
-        var bookingB = new Booking();
         bookingB.setStatus("Nicht Verfügbar");
         bookingB.setType("GanzerTag");
         bookingB.setDate(null);

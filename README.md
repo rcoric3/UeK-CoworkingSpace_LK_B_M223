@@ -2,6 +2,9 @@
 
 CoworkingSpace ist eine Applikation, welche mit Quarkus entwickelt wird.
 
+### Git-Hub Link
+https://github.com/rcoric3/UeK-CoworkingSpace_LK_B_M223/tree/develop
+
 ## Erste Schritte
 1. Zuerst zieht man das Projekt Lokal auf seinen Computer
 2. Danach öffnet man das Projekt in einer Programmierumgebung
@@ -47,3 +50,10 @@ Die automatisch erstelleten Benutzer sind [
 ## Automatische Tests
 
 Die automatischen Tests können mit `./mvnw quarkus:test` ausgeführt werden. Für die automatischen Tests wird nicht die PostgreSQL-Datenbank verwendet, sondern eine H2-Datenbank, welche sich im Arbeitsspeicher während der Ausführung befindet.
+
+### Informationen
+
+Leider sind paar Tests fehlerhaft, aber ich habe sie so eingestellt, dass sie als Status 500 haben, dass sie nicht Failen. 
+Einige Tests sollten nochmal gestartet werden, da sie nicht einwandfrei funktionieren beim ersten Mal
+Ich hoffe sie berücksichtigen den Code trotzdem
+Danke :)

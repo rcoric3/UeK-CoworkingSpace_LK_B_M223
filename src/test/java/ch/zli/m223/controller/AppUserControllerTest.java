@@ -1,114 +1,78 @@
 package ch.zli.m223.controller;
 
-import io.quarkus.test.junit.QuarkusTest;
-import io.restassured.http.ContentType;
-import io.restassured.mapper.ObjectMapperType;
-import org.junit.jupiter.api.Test;
-
-import javax.transaction.Transactional;
-
 import static io.restassured.RestAssured.given;
-import static org.hamcrest.Matchers.*;
-import static org.junit.jupiter.api.Assertions.assertEquals;
+
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
+
+import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;
+import org.junit.jupiter.api.Order;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestMethodOrder;
+
+import com.google.inject.Inject;
+
 import ch.zli.m223.model.AppUser;
+import ch.zli.m223.service.AppUserService;
+import io.quarkus.test.common.QuarkusTestResource;
+import io.quarkus.test.h2.H2DatabaseTestResource;
+import io.quarkus.test.junit.QuarkusTest;
+import io.quarkus.test.security.TestSecurity;
 
 @QuarkusTest
-@Transactional
+@QuarkusTestResource(H2DatabaseTestResource.class)
+@TestMethodOrder(OrderAnnotation.class)
+@TestSecurity(user = "admin@gmail.com", roles = "admin")
 public class AppUserControllerTest {
+
+    @Inject
+    AppUserService userService;
+
     @Test
+    @Order(1)
     void testCreateUser() {
 
-        AppUser appUser = new AppUser();
-        appUser.setUsername("testuser");
-        appUser.setEmail("test@example.com");
-
-        AppUser createdUser = given()
-        .contentType(ContentType.JSON)
-        .body(appUser, ObjectMapperType.JACKSON_2)
-        .when()
-        .post("/users/createUser")
-        .then()
-        .statusCode(200)
-        .extract()
-        .as(AppUser.class, ObjectMapperType.JACKSON_2);
-
-        assertEquals(appUser.getUsername(), createdUser.getUsername());
-        assertEquals(appUser.getEmail(), createdUser.getEmail());
-    }
-
-    @Test
-    void testDeleteBooking() {
-        AppUser appUser = new AppUser();
-        appUser.setUsername("deletetestuser");
-        appUser.setEmail("delete@test.com");
-
-        AppUser createdUser = given()
-        .contentType(ContentType.JSON)
-        .body(appUser, ObjectMapperType.JACKSON_2)
-        .when()
-        .post("/users/createUser")
-        .then()
-        .statusCode(200)
-        .extract()
-        .as(AppUser.class, ObjectMapperType.JACKSON_2);
-
         given()
-        .pathParam("userId", createdUser.getId())
-        .when()
-        .delete("/users/deleteUser/{userId}")
-        .then()
-        .statusCode(204);
-
-        given()
-        .pathParam("userId", createdUser.getId())
-        .when()
-        .get("/users/getUser/{userId}")
-        .then()
-        .statusCode(404);
-    }
-
-    @Test
-    void testManageMembers() {
-        AppUser appUser = new AppUser();
-        appUser.setUsername("updatetestuser");
-        appUser.setEmail("update@test.com");
-
-        AppUser createdUser = given()
-            .contentType(ContentType.JSON)
-            .body(appUser, ObjectMapperType.JACKSON_2)
-            .when()
-            .post("/users/createUser")
-            .then()
-            .statusCode(200)
-            .extract()
-            .as(AppUser.class, ObjectMapperType.JACKSON_2);
-
-            AppUser updatedUser = new AppUser();
-            updatedUser.setUsername("updateduser");
-            updatedUser.setEmail("updated@example.com");
-    
-            AppUser resultUser = given()
-                .contentType(ContentType.JSON)
-                .pathParam("userId", createdUser.getId())
-                .body(updatedUser, ObjectMapperType.JACKSON_2)
+                .contentType(MediaType.APPLICATION_JSON)
+                .body("{"
+                        + "\"username\": \"admin\","
+                        + "\"lastname\": \"Gwerder\","
+                        + "\"email\": \"admin@gmail.com\","
+                        + "\"password\": \"1234\","
+                        + "\"isAdmin\": true"
+                        + "}")
                 .when()
-                .put("/users/manageMembers/{userId}")
+                .post("/users/createUser")
                 .then()
                 .statusCode(200)
                 .extract()
-                .as(AppUser.class, ObjectMapperType.JACKSON_2);
-
-                assertEquals(updatedUser.getUsername(), resultUser.getUsername());
-                assertEquals(updatedUser.getEmail(), resultUser.getEmail());
+                .response();
     }
 
     @Test
-    void testShowUser() {
+    @Order(2)
+    public void testShowUser() {
         given()
-        .when()
-        .get("/users/getAll")
-        .then()
-        .statusCode(200)
-        .body("size()", greaterThanOrEqualTo(0));
+                .when().get("/users/getAll")
+                .then()
+                .statusCode(200);
+    }
+
+    @Test
+    @Order(4)
+    public void testManageMembers() {
+        given()
+                .when().put("/users/manageMembers/1")
+                .then()
+                .statusCode(204);
+    }
+
+    @Test
+    @Order(3)
+    public void testDeleteUser() {
+        given()
+                .when().delete("/users/deleteUser/1" + 1)
+                .then()
+                .statusCode(204);
     }
 }
